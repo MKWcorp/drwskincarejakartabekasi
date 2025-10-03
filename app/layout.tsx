@@ -145,7 +145,9 @@ export default function RootLayout({
             __html: JSON.stringify(structuredData)
           }}
         />
-        <meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE" />      </head>
+        <meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE" />
+        <script async src="https://www.tiktok.com/embed.js"></script>
+      </head>
       <body className={`${inter.className} ${mysteryQuest.variable} ${sourceCodePro.variable}`}>
         {children}
         <FloatingWhatsApp />
