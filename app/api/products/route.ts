@@ -21,9 +21,8 @@ export async function GET(request: NextRequest) {
     
     let products: any[] = []
     let packages: any[] = []
-    
-    if (slug) {
-      // Get specific product by slug
+      if (slug) {
+      // Get specific product by slug - check both produk and paket_produk tables
       products = await (prisma as any).produk.findMany({
         where: { slug: slug },
         include: {
@@ -45,6 +44,34 @@ export async function GET(request: NextRequest) {
           }
         }
       })
+
+      // If no product found, check paket_produk table
+      if (products.length === 0) {
+        packages = await (prisma as any).paket_produk.findMany({
+          where: { slug: slug },
+          include: {
+            paket_kategori: {
+              include: {
+                kategori: true
+              }
+            },
+            foto_produk: {
+              orderBy: {
+                urutan: 'asc'
+              }
+            },
+            paket_isi: {
+              include: {
+                produk: {
+                  include: {
+                    produk_detail: true
+                  }
+                }
+              }
+            }
+          }
+        })
+      }
     } else {
       // Get products and packages based on type parameter
       if (!type || type === 'products' || type === 'all') {

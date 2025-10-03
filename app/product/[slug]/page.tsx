@@ -28,22 +28,29 @@ interface Product {
     urutan: number;
   }> | null;
   slug: string;
-  bpom: string | null;
+  bpom?: string | null;
+  type?: 'product' | 'package';
   categories: {
     id: string;
     name: string;
     description: string | null;
   } | null;
-  detail: {
+  detail?: {
     kegunaan: string | null;
     komposisi: string | null;
     caraPakai: string | null;
     netto: string | null;
     noBpom: string | null;
   } | null;
-  bahanAktif: Array<{
+  bahanAktif?: Array<{
     nama: string;
     fungsi: string | null;
+  }> | null;
+  packageContents?: Array<{
+    id: string;
+    nama: string;
+    jumlah: number;
+    gambar: string | null;
   }> | null;
   createdAt: string;
   updatedAt: string;
@@ -372,6 +379,46 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                       <p className="text-gray-700 leading-relaxed">{product.detail.komposisi}</p>
                     </div>
                   )}
+                </div>
+              </div>
+            </div>          )}
+
+          {/* Package Contents Section - Only for packages */}
+          {product.type === 'package' && product.packageContents && product.packageContents.length > 0 && (
+            <div className="mb-12">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="bg-green-600 text-white px-6 py-4">
+                  <h2 className="text-xl font-bold flex items-center gap-2">
+                    <FontAwesomeIcon icon={faTag} className="w-5 h-5" />
+                    Isi Paket ({product.packageContents.length} Produk)
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {product.packageContents.map((item, index) => (
+                      <div key={index} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div className="flex-shrink-0">
+                          {item.gambar ? (
+                            <SafeImage
+                              src={item.gambar}
+                              alt={item.nama}
+                              width={60}
+                              height={60}
+                              className="rounded-lg object-cover"
+                            />
+                          ) : (
+                            <div className="w-15 h-15 bg-gray-200 rounded-lg flex items-center justify-center">
+                              <FontAwesomeIcon icon={faTag} className="text-gray-400 text-2xl" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-900 text-sm">{item.nama}</h4>
+                          <p className="text-green-600 font-medium text-sm">Jumlah: {item.jumlah}x</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
