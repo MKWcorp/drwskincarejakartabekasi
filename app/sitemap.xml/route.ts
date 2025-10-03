@@ -5,13 +5,12 @@ import { prisma } from '@/lib/db';
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const baseUrl = 'https://drwskincarebanyuwangi.vercel.app';
+  const baseUrl = 'https://drwskincarejakarta.com';
   
   // Static pages
   const staticPages = [
     '',
     '/product',
-    '/treatment',
     '/faq',
     '/privacy-policy',
   ];
@@ -19,10 +18,7 @@ export async function GET() {
   // Get product slugs dynamically from database
   const productSlugs: string[] = [];
   try {
-    const products = await prisma.product.findMany({
-      where: {
-        isVisible: true
-      },
+    const products = await (prisma as any).produk.findMany({
       select: {
         slug: true
       }

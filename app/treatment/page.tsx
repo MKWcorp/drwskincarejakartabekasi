@@ -1,29 +1,30 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faMapMarkerAlt, 
-  faEnvelope, 
-  faPhone, 
   faSpa,
   faSearch,
   faFilter,
   faStar,
   faGem,
-  faUsers
+  faUsers,
+  faStethoscope,
+  faDumbbell,
+  faCut,
+  faShieldAlt,
+  faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 interface Treatment {
   name: string;
-  price: string;
-  benefits: string;
+  price: number;
   description: string;
+  benefits: string[];
 }
 
 interface TreatmentCategory {
@@ -31,192 +32,346 @@ interface TreatmentCategory {
 }
 
 const treatmentData: TreatmentCategory = {
-  "Facial Basic": [
-    { 
-      "name": "Facial Basic / Pelajar", 
-      "price": "Rp 50.000", 
-      "benefits": "Membersihkan wajah dari kotoran dan minyak berlebih.",
-      "description": "Perawatan dasar untuk pelajar dengan pembersihan kulit ringan agar wajah tetap segar dan sehat." 
+  "Paket Facial Silver": [
+    {
+      "name": "Facial Glow Up",
+      "price": 85000,
+      "description": "Pembersihan wajah dasar dengan pijat ringan dan masker untuk memberi efek segar dan cerah.",
+      "benefits": [
+        "Membersihkan kotoran & minyak berlebih",
+        "Menyegarkan kulit agar tampak lebih glowing",
+        "Meningkatkan sirkulasi darah wajah"
+      ]
     },
-    { 
-      "name": "Facial Whitening", 
-      "price": "Rp 65.000", 
-      "benefits": "Mencerahkan kulit kusam dan meratakan warna kulit.",
-      "description": "Mengandung bahan pencerah untuk membuat wajah lebih glowing dan cerah alami." 
+    {
+      "name": "Facial Acne Clean",
+      "price": 95000,
+      "description": "Facial dasar fokus kulit berjerawat dengan pembersihan pori dan masker penenang.",
+      "benefits": [
+        "Membantu mengurangi minyak penyebab jerawat",
+        "Meredakan kemerahan ringan",
+        "Membuat pori terasa lebih bersih"
+      ]
     },
-    { 
-      "name": "Facial Acne", 
-      "price": "Rp 65.000", 
-      "benefits": "Mengurangi jerawat aktif dan mengontrol minyak.",
-      "description": "Facial khusus untuk kulit berjerawat dengan ekstraksi komedo dan soothing mask." 
+    {
+      "name": "Facial Glow Up + Messo Therapy (Setrika Wajah)",
+      "price": 135000,
+      "description": "Facial Glow Up ditambah setrika wajah untuk membantu penyerapan serum lebih optimal.",
+      "benefits": [
+        "Kulit tampak lebih halus dan lembut",
+        "Penyerapan nutrisi serum lebih baik",
+        "Memberi efek cerah yang lebih tahan lama"
+      ]
     },
-    { 
-      "name": "Facial PDT (Omega Light)", 
-      "price": "Rp 80.000", 
-      "benefits": "Membantu regenerasi kulit dan mengurangi peradangan.",
-      "description": "Menggunakan terapi cahaya LED untuk jerawat, kulit kusam, dan tanda penuaan." 
+    {
+      "name": "Facial Acne Clean + Messo Therapy (Setrika Wajah)",
+      "price": 145000,
+      "description": "Perawatan acne clean dipadukan dengan setrika wajah untuk menenangkan dan merawat kulit berjerawat.",
+      "benefits": [
+        "Mengurangi tampilan pori tersumbat",
+        "Membantu menenangkan kulit berjerawat",
+        "Mendukung perbaikan tekstur kulit"
+      ]
     },
-    { 
-      "name": "Masker Peel Off", 
-      "price": "Rp 25.000", 
-      "benefits": "Menyegarkan wajah, mengangkat sel kulit mati.",
-      "description": "Masker praktis untuk mengencangkan kulit dan membersihkan pori-pori." 
+    {
+      "name": "Facial Pelling + Messo Therapy",
+      "price": 155000,
+      "description": "Eksfoliasi lembut (peeling) untuk angkat sel kulit mati ditambah setrika wajah.",
+      "benefits": [
+        "Mencerahkan dan meratakan warna kulit",
+        "Membuat tekstur kulit terasa lebih halus",
+        "Mendukung regenerasi sel kulit baru"
+      ]
     }
   ],
-  "Facial Advance": [
-    { 
-      "name": "Facial Detox", 
-      "price": "Rp 120.000", 
-      "benefits": "Membersihkan toksin dan polusi dari kulit.",
-      "description": "Cocok untuk kulit yang sering terpapar polusi, membuat wajah lebih segar." 
+  "Facial Triple Premium": [
+    {
+      "name": "F. Detox (Facial+Detox+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 190000,
+      "description": "Facial lengkap dengan tahap detoks, setrika wajah, dan totok untuk relaksasi.",
+      "benefits": [
+        "Membantu mengangkat kotoran mendalam",
+        "Meningkatkan sirkulasi & rasa rileks",
+        "Kulit terasa lebih ringan dan segar"
+      ]
     },
-    { 
-      "name": "Facial Mikrodermabrasi", 
-      "price": "Rp 130.000", 
-      "benefits": "Menghaluskan kulit dan mengurangi noda hitam.",
-      "description": "Teknik eksfoliasi dengan diamond tip untuk meratakan tekstur kulit." 
+    {
+      "name": "F. Microdermabrasi (Facial+Micro+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 185000,
+      "description": "Pengelupasan mekanis lembut untuk memperbaiki tekstur, dilengkapi setrika wajah.",
+      "benefits": [
+        "Menghaluskan tekstur & bekas halus",
+        "Mencerahkan kulit kusam",
+        "Mendukung produksi kolagen alami"
+      ]
     },
-    { 
-      "name": "Facial RF", 
-      "price": "Rp 130.000", 
-      "benefits": "Mengencangkan kulit dan merangsang kolagen.",
-      "description": "Menggunakan teknologi radio frekuensi untuk mengurangi tanda penuaan." 
+    {
+      "name": "F. DNA Salmon (Facial+DNA Salmon Micronidle+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 195000,
+      "description": "Facial dengan penyaluran serum DNA Salmon menggunakan micro-needling ringan dan setrika wajah.",
+      "benefits": [
+        "Membantu melembapkan intens",
+        "Mendukung perbaikan skin barrier",
+        "Kulit tampak kenyal dan bercahaya"
+      ]
     },
-    { 
-      "name": "Facial Chemical Peeling", 
-      "price": "Rp 130.000", 
-      "benefits": "Mengangkat sel kulit mati secara mendalam.",
-      "description": "Menggunakan cairan peeling untuk mencerahkan kulit kusam dan mengurangi bekas jerawat." 
+    {
+      "name": "F. Ultrasound (Facial+Ultrasound+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 185000,
+      "description": "Facial dengan alat ultrasound untuk membantu penetrasi serum dan menenangkan kulit.",
+      "benefits": [
+        "Penyerapan serum lebih maksimal",
+        "Membuat kulit terasa kencang",
+        "Menenangkan kulit yang lelah"
+      ]
     },
-    { 
-      "name": "Facial HIV U Max", 
-      "price": "Rp 150.000", 
-      "benefits": "Menutrisi kulit dan meningkatkan elastisitas.",
-      "description": "Perawatan advance dengan teknologi modern untuk kulit lebih sehat." 
+    {
+      "name": "F. Snow White Pelling (Facial+Snow White+Pelling+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 195000,
+      "description": "Eksfoliasi pencerah bertahap dengan rangkaian Snow White dan setrika wajah.",
+      "benefits": [
+        "Mencerahkan tampilan kulit kusam",
+        "Membantu meratakan warna kulit",
+        "Kulit tampak lebih bersih dan cerah"
+      ]
     },
-    { 
-      "name": "Facial Hidrapeel", 
-      "price": "Rp 150.000", 
-      "benefits": "Menghidrasi kulit kering dan melembutkan wajah.",
-      "description": "Teknologi hydra-dermabrasion untuk melembapkan kulit secara intensif." 
+    {
+      "name": "Facial Melasma Micronidle",
+      "price": 175000,
+      "description": "Perawatan khusus area hiperpigmentasi dengan micro-needling ringan.",
+      "benefits": [
+        "Mendukung pemudaran tampilan flek",
+        "Meningkatkan penyerapan bahan pencerah",
+        "Menyamarkan warna kulit tidak merata"
+      ]
     },
-    { 
-      "name": "Facial Black Doll", 
-      "price": "Rp 180.000", 
-      "benefits": "Mengurangi pori besar dan mencerahkan kulit.",
-      "description": "Menggunakan laser karbon aktif untuk membersihkan kulit secara mendalam." 
+    {
+      "name": "IPL Rejuve (Facial+IPL Rejuve+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 195000,
+      "description": "Rangkaian facial dengan teknologi IPL untuk peremajaan tampilan kulit.",
+      "benefits": [
+        "Membantu menyamarkan noda ringan",
+        "Kulit tampak lebih cerah dan segar",
+        "Mendukung tampilan pori lebih halus"
+      ]
     },
-    { 
-      "name": "Facial Acne Serum", 
-      "price": "Rp 140.000", 
-      "benefits": "Mengatasi jerawat dengan serum khusus.",
-      "description": "Perawatan jerawat dengan kombinasi facial dan aplikasi serum aktif." 
-    },
-    { 
-      "name": "Facial DNA Salmon", 
-      "price": "Rp 150.000", 
-      "benefits": "Meremajakan kulit dan memperbaiki skin barrier.",
-      "description": "Facial premium dengan kandungan DNA salmon untuk anti-aging dan glowing." 
+    {
+      "name": "IPL Acne (Facial+IPL Acne+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 175000,
+      "description": "Facial dengan mode IPL untuk membantu perawatan kulit berjerawat.",
+      "benefits": [
+        "Membantu mengurangi tampilan jerawat aktif",
+        "Menjaga kebersihan pori",
+        "Menenangkan kemerahan ringan"
+      ]
     }
   ],
-  "Special Treatments": [
-    { 
-      "name": "Counter / Buang Kutil", 
-      "price": "Rp 110.000", 
-      "benefits": "Menghilangkan kutil dengan aman.",
-      "description": "Tindakan medis ringan untuk mengangkat kutil tanpa bekas berlebih." 
+  "Paket Facial Combo Premium": [
+    {
+      "name": "Facial High Frekuensi Acne Clean (Facial+HF+Messo Therapy/Setrika Wajah+PDT)",
+      "price": 235000,
+      "description": "Facial acne dengan alat high-frequency, setrika wajah, dan PDT (photodynamic).",
+      "benefits": [
+        "Membantu mengurangi bakteri penyebab jerawat",
+        "Mengontrol minyak berlebih",
+        "Menenangkan kulit dan memberi efek bersih"
+      ]
     },
-    { 
-      "name": "Dermapen", 
-      "price": "Rp 150.000", 
-      "benefits": "Mengurangi bekas jerawat dan merangsang kolagen.",
-      "description": "Microneedling dengan dermapen untuk peremajaan kulit." 
+    {
+      "name": "Facial Cleopatra (Facial+Microdermabrasi+Messo Therapy/Setrika Wajah+Totok Wajah)+PDT",
+      "price": 325000,
+      "description": "Perawatan premium gabungan microdermabrasi, setrika wajah, totok, dan PDT.",
+      "benefits": [
+        "Kulit terasa lebih halus & bercahaya",
+        "Membantu menyamarkan kusam & pori",
+        "Memberi efek firming ringan"
+      ]
     },
-    { 
-      "name": "BB Glow", 
-      "price": "Rp 175.000", 
-      "benefits": "Kulit tampak cerah seperti memakai BB cream.",
-      "description": "Teknik semi-permanen untuk mencerahkan kulit secara natural." 
+    {
+      "name": "Facial Booster Micronidle (Facial+Detox+DNA Salmon Micronidle+Messo Therapy/Setrika Wajah+Totok Wajah)+PDT",
+      "price": 385000,
+      "description": "Detoks + micro-needling serum DNA Salmon + setrika wajah + PDT.",
+      "benefits": [
+        "Hidrasi intens & tampilan kenyal",
+        "Mendukung perbaikan tekstur",
+        "Tampak glowing lebih tahan lama"
+      ]
     },
-    { 
-      "name": "Tanam Benang Collagen", 
-      "price": "Rp 150.000", 
-      "benefits": "Mengencangkan kulit wajah.",
-      "description": "Perawatan estetika dengan benang kolagen untuk lifting wajah." 
+    {
+      "name": "Facial Anti Anging (Facial+Microdermabrasi+DNA Salmon Micronidle+Messo Therapy/Setrika Wajah+Totok Wajah)+PDT",
+      "price": 385000,
+      "description": "Kombinasi anti-aging dengan microdermabrasi, DNA Salmon, setrika wajah, dan PDT.",
+      "benefits": [
+        "Membantu tampilan kulit lebih kencang",
+        "Menghaluskan kerutan halus",
+        "Memberi kesan kulit lebih muda"
+      ]
     },
-    { 
-      "name": "Magnetik Modmask", 
-      "price": "Rp 120.000", 
-      "benefits": "Membersihkan pori-pori dalam.",
-      "description": "Masker unik dengan teknologi magnet untuk detox kulit." 
-    },
-    { 
-      "name": "IPL Rejuve", 
-      "price": "Rp 150.000", 
-      "benefits": "Mengurangi pigmentasi dan membuat kulit lebih cerah.",
-      "description": "Perawatan dengan cahaya intens untuk rejuvenasi kulit." 
-    },
-    { 
-      "name": "Lash Lift", 
-      "price": "Rp 75.000", 
-      "benefits": "Membuat bulu mata lentik alami.",
-      "description": "Perawatan bulu mata agar tampak lebih tebal dan lentik tanpa extension." 
-    },
-    { 
-      "name": "Bekam Aesthetic + Acupuncture", 
-      "price": "Rp 175.000", 
-      "benefits": "Melancarkan peredaran darah dan relaksasi tubuh.",
-      "description": "Kombinasi bekam modern dan akupuntur untuk kesehatan dan kecantikan." 
-    },
-    { 
-      "name": "Facial + Bekam Aesthetic", 
-      "price": "Rp 100.000", 
-      "benefits": "Membersihkan wajah sekaligus melancarkan peredaran darah.",
-      "description": "Perawatan unik yang menggabungkan facial dengan bekam modern." 
-    },
-    { 
-      "name": "Facial Micro Detox", 
-      "price": "Rp 170.000", 
-      "benefits": "Detoksifikasi kulit mendalam.",
-      "description": "Gabungan teknologi modern untuk mengeluarkan toksin dari kulit." 
-    },
-    { 
-      "name": "Facial Micro/Detox RF", 
-      "price": "Rp 200.000", 
-      "benefits": "Mengencangkan kulit sekaligus detoks.",
-      "description": "Kombinasi radio frekuensi dan detox facial untuk hasil maksimal." 
-    },
-    { 
-      "name": "Laser Ketiak", 
-      "price": "Rp 150.000", 
-      "benefits": "Mengurangi bulu ketiak secara permanen.",
-      "description": "Perawatan laser khusus area ketiak untuk kulit lebih bersih." 
-    },
-    { 
-      "name": "Paket Laser + IPL Ketiak", 
-      "price": "Rp 250.000", 
-      "benefits": "Maksimal hasil bebas bulu ketiak.",
-      "description": "Kombinasi laser dan IPL untuk perawatan ketiak." 
+    {
+      "name": "Facial Anti Anging Melasma (Facial+Microdermabrasi+Melasma Micronidle+Messo Therapy/Setrika Wajah+Totok Wajah)",
+      "price": 385000,
+      "description": "Paket anti-aging sekaligus fokus hiperpigmentasi dengan micro-needling.",
+      "benefits": [
+        "Menyamarkan tampilan flek",
+        "Mencerahkan dan meratakan warna kulit",
+        "Mendukung elastisitas kulit"
+      ]
     }
   ],
-  "Body Slimming": [
-    { 
-      "name": "Body Slimming Lengan", 
-      "price": "Rp 150.000", 
-      "benefits": "Mengencangkan dan mengecilkan lengan.",
-      "description": "Perawatan body contouring khusus area lengan." 
+  "Tindakan Medis": [
+    {
+      "name": "Booster Injeksi DNA Salmon (Free Facial Microdermabrasi)",
+      "price": 850000,
+      "description": "Injeksi booster dengan kandungan DNA Salmon, termasuk facial microdermabrasi.",
+      "benefits": [
+        "Membantu hidrasi dan kekenyalan kulit",
+        "Mendukung perbaikan skin barrier",
+        "Kulit tampak lebih sehat dan segar"
+      ]
     },
-    { 
-      "name": "Body Slimming Perut", 
-      "price": "Rp 200.000", 
-      "benefits": "Mengurangi lemak perut.",
-      "description": "Treatment pembakaran lemak untuk perut lebih rata." 
+    {
+      "name": "Booster Injeksi Melasma (Free Facial Melasma Micronidle)",
+      "price": 550000,
+      "description": "Injeksi booster yang difokuskan untuk area hiperpigmentasi, dilengkapi facial khusus.",
+      "benefits": [
+        "Mendukung pemudaran tampilan noda",
+        "Mencerahkan area yang kusam",
+        "Membantu meratakan warna kulit"
+      ]
     },
-    { 
-      "name": "Body Slimming Paha", 
-      "price": "Rp 200.000", 
-      "benefits": "Mengecilkan lingkar paha.",
-      "description": "Perawatan body slimming untuk paha lebih ramping." 
+    {
+      "name": "Dermapen",
+      "price": 350000,
+      "description": "Terapi micro-needling menggunakan alat dermapen untuk merangsang peremajaan kulit.",
+      "benefits": [
+        "Membantu meratakan tekstur",
+        "Menyamarkan tampilan pori & bekas ringan",
+        "Meningkatkan penyerapan serum perawatan"
+      ]
+    },
+    {
+      "name": "Facial Acne Clean + Dermapen",
+      "price": 425000,
+      "description": "Paket pembersihan jerawat dikombinasikan dengan micro-needling dermapen.",
+      "benefits": [
+        "Membersihkan pori dan mendukung perawatan bekas",
+        "Membantu kontrol minyak",
+        "Meningkatkan efektivitas serum anti-acne"
+      ]
+    },
+    {
+      "name": "Paket Dermapen + Facial Acne Clean 4x Treatment",
+      "price": 1500000,
+      "description": "Program 4 kali sesi dermapen dengan facial acne untuk hasil lebih maksimal.",
+      "benefits": [
+        "Perbaikan bertahap pada tekstur & bekas ringan",
+        "Membantu meminimalkan breakout berulang",
+        "Hasil perawatan lebih konsisten"
+      ]
+    },
+    {
+      "name": "Soft Couter Menghilangkan Tahi Lalat, Milia, Skintag, Kutil",
+      "price": 35000,
+      "description": "Tindakan minor untuk mengangkat lesi kulit tertentu (harga mulai, tergantung area).",
+      "benefits": [
+        "Tampilan kulit lebih rapi",
+        "Proses cepat dan ringkas",
+        "Disesuaikan dengan ukuran/area"
+      ]
+    }
+  ],
+  "Body Treatment": [
+    {
+      "name": "IPL Removal Underderm (kedua ketiak)",
+      "price": 150000,
+      "description": "Penghilangan rambut halus area ketiak dengan teknologi IPL.",
+      "benefits": [
+        "Rambut tumbuh lebih lambat dan halus",
+        "Kulit terasa lebih bersih",
+        "Proses cepat dan praktis"
+      ]
+    },
+    {
+      "name": "IPL Removal Kedua Tangan",
+      "price": 175000,
+      "description": "Perawatan IPL untuk mengurangi rambut halus di kedua lengan.",
+      "benefits": [
+        "Mengurangi frekuensi shaving/waxing",
+        "Kulit terasa lebih halus",
+        "Hasil tampak rapi"
+      ]
+    },
+    {
+      "name": "IPL Kedua Kaki",
+      "price": 225000,
+      "description": "Pengurangan rambut halus pada kedua kaki menggunakan IPL.",
+      "benefits": [
+        "Membuat kulit kaki terasa lebih halus",
+        "Tampilan lebih bersih dan rapi",
+        "Praktis untuk perawatan rutin"
+      ]
+    },
+    {
+      "name": "IPL Acne Punggung",
+      "price": 450000,
+      "description": "Terapi IPL khusus area punggung untuk membantu perawatan jerawat.",
+      "benefits": [
+        "Membantu mengurangi tampilan jerawat punggung",
+        "Membersihkan pori-pori",
+        "Menjaga kulit punggung terasa lebih nyaman"
+      ]
+    },
+    {
+      "name": "HF Acne Punggung",
+      "price": 485000,
+      "description": "Perawatan high-frequency untuk area punggung yang rentan berjerawat.",
+      "benefits": [
+        "Membantu mengontrol minyak berlebih",
+        "Membersihkan pori dan menenangkan kemerahan",
+        "Mendukung kebersihan kulit punggung"
+      ]
+    },
+    {
+      "name": "Manicure",
+      "price": 100000,
+      "description": "Perawatan kuku tangan meliputi potong, bentuk, perapian kutikula, dan pewarnaan dasar.",
+      "benefits": [
+        "Kuku tampak rapi dan bersih",
+        "Meningkatkan kepercayaan diri",
+        "Memberi kesan tangan terawat"
+      ]
+    },
+    {
+      "name": "Pedicure",
+      "price": 175000,
+      "description": "Perawatan kuku kaki termasuk pembersihan, scrub ringan, dan perapian kutikula.",
+      "benefits": [
+        "Kuku kaki tampak rapi",
+        "Membantu menghaluskan telapak",
+        "Memberi rasa nyaman saat berjalan"
+      ]
+    },
+    {
+      "name": "Paket Menicure Pedicure",
+      "price": 175000,
+      "description": "Paket perawatan kuku tangan dan kaki sekaligus.",
+      "benefits": [
+        "Perawatan lengkap dalam satu sesi",
+        "Tampilan kuku lebih bersih dan rapi",
+        "Hemat waktu perawatan"
+      ]
+    }
+  ],
+  "Hair Treatment": [
+    {
+      "name": "Cuci Keramas + Creambath",
+      "price": 55000,
+      "description": "Perawatan rambut dasar mencakup keramas, pijat kulit kepala, dan creambath.",
+      "benefits": [
+        "Membersihkan kulit kepala & rambut",
+        "Memberi rasa rileks pada kepala",
+        "Rambut terasa lebih lembut dan mudah diatur"
+      ]
     }
   ]
 };
@@ -225,22 +380,31 @@ const TreatmentPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const handleWhatsAppBooking = (treatmentName: string, price: string) => {
-    const message = `Halo! Saya tertarik untuk booking treatment "${treatmentName}" dengan harga ${price}. Bisa tolong berikan informasi jadwal dan prosedurnya?`;
-    const whatsappUrl = `https://wa.me/6285852555571?text=${encodeURIComponent(message)}`;
+  const handleWhatsAppBooking = (treatmentName: string, price: number) => {
+    const formattedPrice = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price);
+    const message = `Halo! Saya tertarik untuk booking treatment "${treatmentName}" dengan harga ${formattedPrice}. Bisa tolong berikan informasi jadwal dan prosedurnya?`;
+    const whatsappUrl = `https://wa.me/6285790795910?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'Facial Basic':
+      case 'Paket Facial Silver':
         return faSpa;
-      case 'Facial Advance':
+      case 'Facial Triple Premium':
         return faGem;
-      case 'Special Treatments':
+      case 'Paket Facial Combo Premium':
         return faStar;
-      case 'Body Slimming':
+      case 'Tindakan Medis':
+        return faStethoscope;
+      case 'Body Treatment':
         return faUsers;
+      case 'Hair Treatment':
+        return faCut;
       default:
         return faSpa;
     }
@@ -248,14 +412,18 @@ const TreatmentPage = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Facial Basic':
-        return 'bg-green-100 text-green-800 border-green-200';
-      case 'Facial Advance':
+      case 'Paket Facial Silver':
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'Facial Triple Premium':
         return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Special Treatments':
+      case 'Paket Facial Combo Premium':
         return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'Body Slimming':
+      case 'Tindakan Medis':
+        return 'bg-red-100 text-red-800 border-red-200';
+      case 'Body Treatment':
         return 'bg-pink-100 text-pink-800 border-pink-200';
+      case 'Hair Treatment':
+        return 'bg-green-100 text-green-800 border-green-200';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
@@ -410,7 +578,11 @@ const TreatmentPage = () => {
                         
                         {/* Price */}
                         <div className="text-2xl font-bold text-primary mb-3">
-                          {treatment.price}
+                          {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                            minimumFractionDigits: 0,
+                          }).format(treatment.price)}
                         </div>
                         
                         {/* Benefits */}
@@ -419,9 +591,14 @@ const TreatmentPage = () => {
                             <FontAwesomeIcon icon={faStar} className="text-yellow-500 mr-2 text-sm" />
                             <span className="text-sm font-semibold text-gray-700">Manfaat:</span>
                           </div>
-                          <p className="text-sm text-gray-600 leading-relaxed">
-                            {treatment.benefits}
-                          </p>
+                          <ul className="text-sm text-gray-600 leading-relaxed space-y-1">
+                            {treatment.benefits.map((benefit, idx) => (
+                              <li key={idx} className="flex items-start">
+                                <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 mr-2 text-xs mt-1 shrink-0" />
+                                <span>{benefit}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                         
                         {/* Description */}
@@ -463,7 +640,7 @@ const TreatmentPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="https://wa.me/6285852555571" 
+              href="https://wa.me/6285790795910" 
               className="bg-white text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
             >
               <FontAwesomeIcon icon={faWhatsapp} />

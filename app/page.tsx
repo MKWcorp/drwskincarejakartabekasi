@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SafeImage from '@/components/SafeImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 
@@ -133,14 +134,15 @@ const LandingPage = () => {
     
     // Untuk static products atau products tanpa foto
     return (
-      <div key={product.id} className="bg-white rounded-lg md:rounded-2xl shadow-lg p-3 md:p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:scale-105 group cursor-pointer" onClick={() => window.open(`https://wa.me/6285852555571?text=${encodeURIComponent(`Halo, saya tertarik dengan produk ${product.namaProduk}`)}`)}>
+      <div key={product.id} className="bg-white rounded-lg md:rounded-2xl shadow-lg p-3 md:p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:scale-105 group cursor-pointer" onClick={() => window.open(`https://wa.me/6285790795910?text=${encodeURIComponent(`Halo, saya tertarik dengan produk ${product.namaProduk}`)}`)}>
         <div className="relative w-full h-32 md:h-48 mb-3 md:mb-4">
           {product.gambar ? (
-            <Image 
+            <SafeImage 
               src={product.gambar} 
               alt={product.namaProduk} 
-              fill
-              className="object-cover rounded-xl group-hover:scale-110 transition-transform duration-300"
+              width={300}
+              height={200}
+              className="object-cover rounded-xl group-hover:scale-110 transition-transform duration-300 w-full h-full"
             />
           ) : (
             <div className={`flex items-center justify-center h-full rounded-xl ${
@@ -187,7 +189,7 @@ const LandingPage = () => {
               Solusi perawatan kulit terbaik dengan produk skincare berkualitas dan konsultasi profesional langsung dari dr. Wahyu Triasmara.
             </p>
             <a 
-              href="https://wa.me/6285852555571" 
+              href="https://wa.me/6285790795910" 
               className="bg-primary text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg hover:bg-pink-600 transition-colors inline-block"
             >
               Konsultasi Sekarang
@@ -343,7 +345,7 @@ const LandingPage = () => {
             Tanya ahli kami seputar perawatan kulit yang tepat untukmu!
           </p>
           <a 
-            href="https://wa.me/6285852555571" 
+            href="https://wa.me/6285790795910" 
             className="bg-white text-primary px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-gray-100 transition-colors inline-block"
           >
             Konsultasi Sekarang

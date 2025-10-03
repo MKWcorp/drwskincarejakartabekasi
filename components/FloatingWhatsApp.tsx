@@ -27,7 +27,7 @@ export default function FloatingWhatsApp() {
   }, []);
 
   const handleClick = () => {
-    const whatsappNumber = '6285852555571';
+    const whatsappNumber = '6285790795910';
     const message = 'Halo! Saya ingin berkonsultasi tentang produk DRW Skincare.';
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');

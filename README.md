@@ -1,6 +1,6 @@
-# DRW Skincare Banyuwangi
+# DRW Skincare Jakarta & Bekasi
 
-Selamat datang di website DRW Skincare Banyuwangi - solusi perawatan kulit terbaik dengan produk berkualitas dan konsultasi profesional.
+Selamat datang di website DRW Skincare - solusi perawatan kulit terbaik dengan produk berkualitas dan konsultasi profesional untuk Jakarta dan Bekasi.
 
 ## Fitur
 
@@ -36,7 +36,7 @@ npm run dev
 ## Struktur Project
 
 ```
-drw-skincare-banyuwangi/
+drw-skincare-jakarta-bekasi/
 ├── app/
 │   ├── globals.css
 │   ├── layout.tsx
@@ -51,9 +51,9 @@ drw-skincare-banyuwangi/
 
 ## Kontak
 
-- 📱 WhatsApp: 0858-5255-5571
+- 📱 WhatsApp: 0857-9079-5910
 - 📧 Email: info@drwskincare.com
-- 📍 Alamat: DRW Skincare Pusat Banyuwangi
+- 📍 Melayani: Jakarta, Bekasi, dan sekitarnya
 
 ## Deploy
 

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Perawatan Kulit & Kecantikan DRW Skincare - Treatment Profesional DRW Skincare',
   description: 'Pusat Perawatan Kulit & Kecantikan DRW Skincare. Treatment facial profesional, anti aging, whitening, jerawat, mikrodermabrasi, chemical peeling dengan dokter berpengalaman. Perawatan kulit terdepan dengan hasil optimal.',
   keywords: 'perawatan kulit, kecantikan DRW skincare, treatment facial, perawatan kulit profesional, klinik kecantikan, facial whitening, anti aging treatment, perawatan jerawat, mikrodermabrasi, chemical peeling, RF treatment, dokter kulit',
-  metadataBase: new URL('https://drwskincarebanyuwangi.com'),
+  metadataBase: new URL('https://drwskincarejakarta.com'),
   openGraph: {
     title: 'Perawatan Kulit & Kecantikan DRW Skincare - Treatment Profesional',
     description: 'Pusat Perawatan Kulit & Kecantikan terpercaya. Treatment facial profesional dengan teknologi terdepan dan dokter berpengalaman untuk hasil kulit yang optimal.',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     ],
     type: 'website',
     siteName: 'DRW Skincare',
-    url: 'https://drwskincarebanyuwangi.com/treatment',
+    url: 'https://drwskincarejakarta.com/treatment',
     locale: 'id_ID',
   },
   twitter: {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_drwskincare_square.png'],
   },
   alternates: {
-    canonical: 'https://drwskincarebanyuwangi.com/treatment',
+    canonical: 'https://drwskincarejakarta.com/treatment',
   },
 }
 

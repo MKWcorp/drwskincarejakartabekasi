@@ -16,15 +16,15 @@ export default function FAQPage() {
     },
     {
       question: "Bagaimana cara konsultasi dengan dokter?",
-      answer: "Anda bisa konsultasi gratis dengan dr. Wahyu Triasmara melalui WhatsApp di 0858-5255-5571. Konsultasi tersedia setiap hari untuk membantu menentukan perawatan yang tepat."
+      answer: "Anda bisa konsultasi gratis dengan dr. Wahyu Triasmara melalui WhatsApp di 0857-9079-5910. Konsultasi tersedia setiap hari untuk membantu menentukan perawatan yang tepat."
     },
     {
       question: "Berapa lama hasil treatment terlihat?",
       answer: "Hasil treatment bervariasi tergantung jenis kulit dan kondisi awal. Umumnya hasil mulai terlihat setelah 2-4 kali perawatan dengan interval yang tepat."
     },
     {
-      question: "Apakah DRW Skincare melayani area luar Banyuwangi?",
-      answer: "Ya, kami melayani area Banyuwangi, Jember, Situbondo, dan sekitarnya. Untuk produk, kami juga melayani pengiriman ke seluruh Indonesia."
+      question: "Apakah DRW Skincare melayani area Jakarta dan Bekasi?",
+      answer: "Ya, kami melayani area Jakarta, Bekasi, Depok, Tangerang, dan sekitarnya. Untuk produk, kami juga melayani pengiriman ke seluruh Indonesia."
     },
     {
       question: "Bagaimana cara booking treatment?",
@@ -80,7 +80,7 @@ export default function FAQPage() {
             Tim kami siap membantu Anda dengan pertanyaan lainnya seputar perawatan kulit dan produk skincare.
           </p>
           <a 
-            href="https://wa.me/6285852555571" 
+            href="https://wa.me/6285790795910" 
             className="bg-primary text-white px-8 py-3 rounded-lg text-lg hover:bg-pink-600 transition-colors inline-block"
           >
             Konsultasi Gratis Sekarang

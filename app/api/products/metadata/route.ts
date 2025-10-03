@@ -15,13 +15,17 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const product = await prisma.product.findFirst({
+    const product = await prisma.produk.findFirst({
       where: {
-        slug: slug,
-        isVisible: true
+        slug: slug
       },
       include: {
-        categories: true
+        produk_kategori: {
+          include: {
+            kategori: true
+          }
+        },
+        produk_detail: true
       }
     });
 
@@ -33,29 +37,29 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate metadata for the product
-    const productImage = product.gambar || product.fotoProduk || '/logo_drwskincare_square.png';
-    const productPrice = product.hargaUmum 
+    const productImage = product.foto_utama || '/logo_drwskincare_square.png';
+    const productPrice = product.harga_umum 
       ? new Intl.NumberFormat('id-ID', {
           style: 'currency',
           currency: 'IDR',
           minimumFractionDigits: 0,
-        }).format(Number(product.hargaUmum))
+        }).format(Number(product.harga_umum))
       : 'Hubungi Kami';
 
-    const title = `${product.namaProduk} - ${productPrice} | DRW Skincare`;
-    const description = product.deskripsi 
-      ? `${product.deskripsi} - Produk skincare berkualitas dari DRW Skincare dengan harga ${productPrice}. ${product.bpom ? `BPOM: ${product.bpom}` : ''}`
-      : `${product.namaProduk} - Produk skincare berkualitas dari DRW Skincare dengan harga ${productPrice}. Konsultasi gratis dengan dokter berpengalaman.`;
+    const title = `${product.nama_produk} - ${productPrice} | DRW Skincare`;
+    const description = product.deskripsi_singkat 
+      ? `${product.deskripsi_singkat} - Produk skincare berkualitas dari DRW Skincare dengan harga ${productPrice}. ${product.bpom ? `BPOM: ${product.bpom}` : ''}`
+      : `${product.nama_produk} - Produk skincare berkualitas dari DRW Skincare dengan harga ${productPrice}. Konsultasi gratis dengan dokter berpengalaman.`;
 
     const metadata = {
       title,
       description,
       image: productImage,
-      url: `https://drwskincarebanyuwangi.com/product/${slug}`,
-      keywords: `${product.namaProduk}, skincare, DRW Skincare, produk kecantikan, perawatan kulit, ${product.bpom ? `BPOM ${product.bpom}` : ''}`,
+      url: `https://drwskincarejakarta.com/product/${slug}`,
+      keywords: `${product.nama_produk}, skincare, DRW Skincare, produk kecantikan, perawatan kulit, ${product.bpom ? `BPOM ${product.bpom}` : ''}`,
       price: productPrice,
       bpom: product.bpom,
-      category: product.categories?.name || 'Skincare'
+      category: product.produk_kategori?.[0]?.kategori?.nama_kategori || 'Skincare'
     };
 
     return NextResponse.json({
