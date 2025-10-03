@@ -4,8 +4,10 @@ import { prisma } from '@/lib/db';
 // Force dynamic rendering for sitemap
 export const dynamic = 'force-dynamic'
 
+import { SITE_CONFIG } from '../../lib/site-config';
+
 export async function GET() {
-  const baseUrl = 'https://drwskincarejakarta.com';
+  const baseUrl = SITE_CONFIG.website.baseUrl;
   
   // Static pages
   const staticPages = [

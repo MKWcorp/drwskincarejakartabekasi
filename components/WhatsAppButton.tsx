@@ -3,15 +3,13 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
+import { getWhatsAppUrl } from '../lib/site-config'
 
 export default function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false)
-    // Nomor WhatsApp DRW Skincare
-  const whatsappNumber = '6285790795910' // Format: 62 + nomor tanpa 0 di depan  
-  const message = 'Halo! Saya ingin konsultasi tentang produk DRW Skincare.'
   
   const handleWhatsAppClick = () => {
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+    const url = getWhatsAppUrl()
     window.open(url, '_blank')
   }
 

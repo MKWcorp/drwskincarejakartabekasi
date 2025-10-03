@@ -10,9 +10,10 @@ module.exports = {
       colors: {
         primary: '#EE5097',
         secondary: '#f8f9fa',
-      },
-      fontFamily: {
+      },      fontFamily: {
         sans: ['Arial', 'sans-serif'],
+        'mystery-quest': ['var(--font-mystery-quest)', 'cursive'],
+        'source-code-pro': ['var(--font-source-code-pro)', 'monospace'],
       },
       animation: {
         'ping-delay': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite 0.2s',

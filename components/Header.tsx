@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { SITE_CONFIG } from '../lib/site-config';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,11 +25,10 @@ export default function Header() {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="flex justify-between items-center px-4 md:px-6 py-4 md:py-5">
-        <div className="flex items-center">
-          <Link href="/">
+        <div className="flex items-center">          <Link href="/">
             <Image 
-              src="/logo_drwskincare.png" 
-              alt="DRW Skincare Logo" 
+              src={SITE_CONFIG.images.logo} 
+              alt="Griya Cantik Shovia Logo" 
               width={300}
               height={100}
               className="h-10 md:h-12 w-auto cursor-pointer"

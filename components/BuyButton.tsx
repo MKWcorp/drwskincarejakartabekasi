@@ -2,6 +2,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
+import { getProductWhatsAppUrl } from '../lib/site-config'
 
 interface BuyButtonProps {
   productName: string
@@ -9,11 +10,8 @@ interface BuyButtonProps {
 }
 
 export default function BuyButton({ productName, className = "" }: BuyButtonProps) {
-  const whatsappNumber = '6285790795910' // Format: 62 + nomor tanpa 0 di depan  
-  const message = `Halo! Saya tertarik untuk membeli produk "${productName}". Bisa tolong berikan informasi lebih lanjut?`
-  
   const handleWhatsAppClick = () => {
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+    const url = getProductWhatsAppUrl(productName)
     window.open(url, '_blank')
   }
 

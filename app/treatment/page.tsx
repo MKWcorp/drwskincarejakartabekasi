@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SITE_CONFIG, getWhatsAppUrl, getTreatmentWhatsAppUrl } from '../../lib/site-config';
 import { 
   faSpa,
   faSearch,
@@ -379,15 +380,13 @@ const treatmentData: TreatmentCategory = {
 const TreatmentPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-
   const handleWhatsAppBooking = (treatmentName: string, price: number) => {
     const formattedPrice = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',
       minimumFractionDigits: 0,
     }).format(price);
-    const message = `Halo! Saya tertarik untuk booking treatment "${treatmentName}" dengan harga ${formattedPrice}. Bisa tolong berikan informasi jadwal dan prosedurnya?`;
-    const whatsappUrl = `https://wa.me/6285790795910?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = getTreatmentWhatsAppUrl(treatmentName, formattedPrice);
     window.open(whatsappUrl, '_blank');
   };
 
@@ -638,9 +637,8 @@ const TreatmentPage = () => {
           <p className="text-lg text-pink-100 mb-8">
             Tim dokter dan terapis berpengalaman siap memberikan konsultasi terbaik untuk kebutuhan perawatan Anda
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="https://wa.me/6285790795910" 
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">            <a 
+              href={getWhatsAppUrl(SITE_CONFIG.whatsappMessages.consultation)} 
               className="bg-white text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
             >
               <FontAwesomeIcon icon={faWhatsapp} />

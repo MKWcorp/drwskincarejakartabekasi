@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 import SafeImage from '../../components/SafeImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faEnvelope, faPhone, faShoppingCart, faInfoCircle, faSpinner, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { SITE_CONFIG } from '../../lib/site-config';
 
 // Add custom CSS for additional animations
 const styles = `
@@ -220,13 +221,12 @@ const ProductPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <header className="bg-white shadow-sm">
+        {/* Header */}        <header className="bg-white shadow-sm">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <Link href="/" className="flex items-center">
               <Image 
-                src="/logo_drwskincare.png" 
-                alt="DRW Skincare Logo" 
+                src={SITE_CONFIG.images.logo} 
+                alt="Griya Cantik Shovia Logo" 
                 width={120}
                 height={40}
                 className="h-10 w-auto"
@@ -247,13 +247,12 @@ const ProductPage = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <header className="bg-white shadow-sm">
+        {/* Header */}        <header className="bg-white shadow-sm">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <Link href="/" className="flex items-center">
               <Image 
-                src="/logo_drwskincare.png" 
-                alt="DRW Skincare Logo" 
+                src={SITE_CONFIG.images.logo} 
+                alt="Griya Cantik Shovia Logo" 
                 width={300}
                 height={100}
                 className="h-10 w-auto"

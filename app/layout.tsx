@@ -1,9 +1,20 @@
 import './globals.css'
 import '../lib/fontawesome'
-import { Inter } from 'next/font/google'
+import { Inter, Mystery_Quest, Source_Code_Pro } from 'next/font/google'
 import FloatingWhatsApp from '../components/FloatingWhatsApp'
+import { SITE_CONFIG } from '../lib/site-config'
 
 const inter = Inter({ subsets: ['latin'] })
+const mysteryQuest = Mystery_Quest({ 
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-mystery-quest',
+})
+const sourceCodePro = Source_Code_Pro({ 
+  subsets: ['latin'],
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-source-code-pro',
+})
 
 export const viewport = {
   width: 'device-width',
@@ -11,31 +22,30 @@ export const viewport = {
 }
 
 export const metadata = {
-  metadataBase: new URL('https://drwskincarejakarta.com'),
-  title: 'DRW Skincare - Produk Kecantikan Skincare & Perawatan Kulit Terbaik',
-  description: 'DRW Skincare - Pusat kecantikan dan perawatan kulit terpercaya. Menyediakan produk skincare berkualitas, treatment profesional, dan konsultasi dengan dokter berpengalaman. Melayani Jakarta dan Bekasi.',
-  keywords: 'DRW Skincare, klinik kecantikan jakarta, produk skincare jakarta, perawatan kulit bekasi, dokter kulit jakarta, facial jakarta, treatment anti aging, skincare profesional, lokasi DRW skincare, klinik kecantikan bekasi',
-  authors: [{ name: 'DRW Skincare' }],
-  creator: 'DRW Skincare',
-  publisher: 'DRW Skincare',
+  metadataBase: new URL(SITE_CONFIG.website.baseUrl),
+  title: `${SITE_CONFIG.business.name} - Produk Kecantikan Skincare & Perawatan Kulit Terbaik`,
+  description: SITE_CONFIG.business.description,
+  keywords: SITE_CONFIG.seo.keywords.primary,  authors: [{ name: SITE_CONFIG.business.name }],
+  creator: SITE_CONFIG.business.name,
+  publisher: SITE_CONFIG.business.name,
   robots: 'index, follow',
   icons: {
-    icon: '/favicon.ico',
-    apple: '/logo_drwskincare_square.png',
+    icon: SITE_CONFIG.images.favicon,
+    apple: SITE_CONFIG.images.logoSquare,
   },
   openGraph: {
     type: 'website',
     locale: 'id_ID',
-    url: 'https://drwskincarejakarta.com',
-    siteName: 'DRW Skincare',
-    title: 'DRW Skincare - Pusat Kecantikan & Perawatan Kulit Terpercaya',
-    description: 'DRW Skincare - Pusat kecantikan dan perawatan kulit terpercaya. Menyediakan produk skincare berkualitas dan treatment profesional oleh dokter berpengalaman.',
+    url: SITE_CONFIG.website.baseUrl,
+    siteName: SITE_CONFIG.business.name,
+    title: SITE_CONFIG.business.tagline,
+    description: SITE_CONFIG.business.description,
     images: [
       {
-        url: '/logo_drwskincare_square.png',
+        url: SITE_CONFIG.images.logoSquare,
         width: 1200,
         height: 1200,
-        alt: 'DRW Skincare - Pusat Kecantikan & Perawatan Kulit',
+        alt: `${SITE_CONFIG.business.name} - ${SITE_CONFIG.business.tagline}`,
       },
     ],
   },
@@ -60,15 +70,14 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
-  const structuredData = {
+}) {  const structuredData = {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    "name": "DRW Skincare",
-    "description": "Produk kecantikan skincare dan perawatan kulit profesional dengan dokter berpengalaman",
-    "url": "https://drwskincarejakarta.com",
-    "logo": "https://drwskincarejakarta.com/logo_drwskincare_square.png",
-    "image": "https://drwskincarejakarta.com/logo_drwskincare_square.png",
+    "name": SITE_CONFIG.business.name,
+    "description": SITE_CONFIG.business.shortDescription,
+    "url": SITE_CONFIG.website.baseUrl,
+    "logo": `${SITE_CONFIG.website.baseUrl}${SITE_CONFIG.images.logoSquare}`,
+    "image": `${SITE_CONFIG.website.baseUrl}${SITE_CONFIG.images.logoSquare}`,
     "telephone": "+62-858-5255-5571",
     "email": "info@drwskincare.com",
     "address": {
@@ -136,9 +145,8 @@ export default function RootLayout({
             __html: JSON.stringify(structuredData)
           }}
         />
-        <meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE" />
-      </head>
-      <body className={inter.className}>
+        <meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE" />      </head>
+      <body className={`${inter.className} ${mysteryQuest.variable} ${sourceCodePro.variable}`}>
         {children}
         <FloatingWhatsApp />
       </body>

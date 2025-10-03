@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { getWhatsAppUrl } from '../lib/site-config';
 
 export default function FloatingWhatsApp() {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,11 +26,8 @@ export default function FloatingWhatsApp() {
       clearInterval(pulseInterval);
     };
   }, []);
-
   const handleClick = () => {
-    const whatsappNumber = '6285790795910';
-    const message = 'Halo! Saya ingin berkonsultasi tentang produk DRW Skincare.';
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    const url = getWhatsAppUrl();
     window.open(url, '_blank');
   };
 
