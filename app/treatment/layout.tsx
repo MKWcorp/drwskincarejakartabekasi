@@ -5,15 +5,14 @@ export const metadata: Metadata = {
   title: `Perawatan Kulit & Kecantikan ${SITE_CONFIG.business.name} - Treatment Profesional`,
   description: `Pusat Perawatan Kulit & Kecantikan ${SITE_CONFIG.business.name}. Treatment facial profesional, anti aging, whitening, jerawat, mikrodermabrasi, chemical peeling dengan dokter berpengalaman. Perawatan kulit terdepan dengan hasil optimal.`,
   keywords: SITE_CONFIG.seo.keywords.treatment,
-  metadataBase: new URL(SITE_CONFIG.website.baseUrl),
-  openGraph: {
+  metadataBase: new URL(SITE_CONFIG.website.baseUrl),  openGraph: {
     title: `Perawatan Kulit & Kecantikan ${SITE_CONFIG.business.name} - Treatment Profesional`,
     description: 'Pusat Perawatan Kulit & Kecantikan terpercaya. Treatment facial profesional dengan teknologi terdepan dan dokter berpengalaman untuk hasil kulit yang optimal.',
     images: [
       {
-        url: SITE_CONFIG.images.ogTreatment,
+        url: SITE_CONFIG.images.logoSquare,
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: `${SITE_CONFIG.business.name} - Perawatan Kulit & Kecantikan Treatment Profesional`,
       },
     ],
